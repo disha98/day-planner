@@ -1,0 +1,42 @@
+export interface Category {
+  id: string;
+  name: string;
+  color: string;
+  created_at: string;
+}
+
+export interface TimeBlock {
+  id: string;
+  title: string;
+  description: string | null;
+  date: string;
+  start_hour: number;
+  end_hour: number;
+  category_id: string | null;
+  category_name: string | null;
+  category_color: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  completed: number;
+  priority: "high" | "medium" | "low";
+  date: string | null;
+  sort_order: number;
+  category_id: string | null;
+  category_name: string | null;
+  category_color: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DailyNote {
+  id: string;
+  date: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+}
