@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Day Planner
+
+A Notion-style weekly day planner for organizing your time blocks, tasks, and notes. All data is stored locally in your browser using IndexedDB — nothing is sent to a server.
+
+**Live demo:** [day-planner-phi.vercel.app](https://day-planner-phi.vercel.app/)
+
+## Features
+
+- **Weekly Grid** — Visual calendar view with draggable time blocks
+- **Day View** — Hour-by-hour breakdown of a single day
+- **List View** — Upcoming events and tasks in a scrollable list
+- **To-Do** — Task management with priorities (high/medium/low) and completion tracking
+- **Notes** — Organize notes into sections and pages, with auto-saving
+- **Categories** — Color-coded categories to tag time blocks and tasks
+- **Calendar Import** — Import `.ics` files from Google Calendar, Apple Calendar, or Outlook
+- **Backup & Restore** — Export all data as JSON, import it back anytime
+- **Meeting URLs** — Automatically extracts Zoom, Google Meet, Teams, and WebEx links from imported events
+- **Drag & Drop** — Reorder tasks and time blocks with @dnd-kit
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org/) (App Router)
+- [React 19](https://react.dev/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [Dexie](https://dexie.org/) (IndexedDB wrapper)
+- [ical.js](https://github.com/kewisch/ical.js) (calendar parsing)
+- [date-fns](https://date-fns.org/) (date utilities)
+- [@dnd-kit](https://dndkit.com/) (drag and drop)
+- [Lucide](https://lucide.dev/) (icons)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Sample Data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The `samples/` directory contains test files for trying out the import feature:
 
-## Learn More
+- **`sample-calendar.ics`** — 13 calendar events across a week, including recurring standups, meetings with video call URLs, and an all-day event
+- **`sample-backup.json`** — Full backup with 3 categories, 7 time blocks, 5 tasks, 2 daily notes, and 2 note pages
 
-To learn more about Next.js, take a look at the following resources:
+To test:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Go to **Import** in the sidebar
+2. Choose **Calendar (.ics)** or **Backup (.json)**
+3. Upload the corresponding sample file from `samples/`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/                  # Pages & API routes
+├── components/
+│   ├── layout/           # Header, sidebar navigation
+│   ├── planner/          # Weekly grid, day view, time blocks, modals
+│   ├── tasks/            # Task list, priority badges
+│   ├── notes/            # Sections, pages, editor
+│   ├── import/           # Calendar & backup import
+│   ├── settings/         # Category management, data export
+│   └── ui/               # Shared primitives (button, modal, input, select)
+├── lib/
+│   ├── db.ts             # Dexie database schema
+│   └── hooks/            # React hooks for data access
+└── types/                # TypeScript interfaces
+samples/
+├── sample-calendar.ics   # Test .ics file for calendar import
+└── sample-backup.json    # Test backup file for restore
+```

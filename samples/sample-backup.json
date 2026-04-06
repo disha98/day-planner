@@ -4,19 +4,31 @@
       "id": "cat-work-001",
       "name": "Work",
       "color": "#3b82f6",
-      "created_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "cat-personal-002",
       "name": "Personal",
       "color": "#10b981",
-      "created_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "cat-health-003",
       "name": "Health",
       "color": "#f59e0b",
-      "created_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "cat-learning-004",
+      "name": "Learning",
+      "color": "#8b5cf6",
+      "created_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "cat-social-005",
+      "name": "Social",
+      "color": "#ec4899",
+      "created_at": "2026-04-01T08:00:00.000Z"
     }
   ],
   "time_blocks": [
@@ -25,84 +37,276 @@
       "title": "Morning Focus Block",
       "description": "Deep work — no meetings",
       "meeting_url": null,
-      "date": "2025-04-07",
+      "date": "2026-04-06",
       "start_hour": 9,
       "end_hour": 11,
       "category_id": "cat-work-001",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "tb-002",
       "title": "Sprint Planning",
       "description": "Plan the next two-week sprint",
       "meeting_url": "https://zoom.us/j/9876543210",
-      "date": "2025-04-07",
+      "date": "2026-04-06",
       "start_hour": 11,
       "end_hour": 12,
       "category_id": "cat-work-001",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "tb-003",
       "title": "Gym",
       "description": "Upper body day",
       "meeting_url": null,
-      "date": "2025-04-07",
+      "date": "2026-04-06",
       "start_hour": 17,
       "end_hour": 18,
       "category_id": "cat-health-003",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "tb-004",
       "title": "Design Review",
       "description": "Review dashboard mockups with design team",
       "meeting_url": "https://meet.google.com/xyz-abcd-efg",
-      "date": "2025-04-08",
+      "date": "2026-04-07",
       "start_hour": 10,
       "end_hour": 11,
       "category_id": "cat-work-001",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "tb-005",
       "title": "Dentist Appointment",
       "description": null,
       "meeting_url": null,
-      "date": "2025-04-08",
+      "date": "2026-04-08",
       "start_hour": 14,
       "end_hour": 15,
       "category_id": "cat-personal-002",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "tb-006",
       "title": "Code Review Session",
       "description": "Review open PRs from the team",
       "meeting_url": null,
-      "date": "2025-04-09",
+      "date": "2026-04-09",
       "start_hour": 13,
       "end_hour": 14,
       "category_id": "cat-work-001",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "tb-007",
       "title": "Yoga",
       "description": "Vinyasa flow class",
       "meeting_url": null,
-      "date": "2025-04-09",
+      "date": "2026-04-09",
       "start_hour": 7,
       "end_hour": 8,
       "category_id": "cat-health-003",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-008",
+      "title": "Product Demo",
+      "description": "Demo new features to stakeholders",
+      "meeting_url": "https://teams.microsoft.com/l/meetup-join/abc123",
+      "date": "2026-04-13",
+      "start_hour": 11,
+      "end_hour": 12,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-009",
+      "title": "Morning Focus Block",
+      "description": "Deep work — no meetings",
+      "meeting_url": null,
+      "date": "2026-04-14",
+      "start_hour": 9,
+      "end_hour": 11,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-010",
+      "title": "Gym",
+      "description": "Leg day",
+      "meeting_url": null,
+      "date": "2026-04-15",
+      "start_hour": 17,
+      "end_hour": 18,
+      "category_id": "cat-health-003",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-011",
+      "title": "Book Club",
+      "description": "Discussing 'Designing Data-Intensive Applications'",
+      "meeting_url": null,
+      "date": "2026-04-16",
+      "start_hour": 18,
+      "end_hour": 19,
+      "category_id": "cat-learning-004",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-012",
+      "title": "Architecture Discussion",
+      "description": "Review proposed microservices migration",
+      "meeting_url": "https://meet.google.com/rst-uvwx-yz1",
+      "date": "2026-04-20",
+      "start_hour": 10,
+      "end_hour": 12,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-013",
+      "title": "Sprint Planning",
+      "description": "Plan the next two-week sprint",
+      "meeting_url": "https://zoom.us/j/9876543210",
+      "date": "2026-04-21",
+      "start_hour": 10,
+      "end_hour": 12,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-014",
+      "title": "Coffee with a Friend",
+      "description": null,
+      "meeting_url": null,
+      "date": "2026-04-22",
+      "start_hour": 16,
+      "end_hour": 17,
+      "category_id": "cat-social-005",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-015",
+      "title": "Yoga",
+      "description": "Vinyasa flow class",
+      "meeting_url": null,
+      "date": "2026-04-23",
+      "start_hour": 7,
+      "end_hour": 8,
+      "category_id": "cat-health-003",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-016",
+      "title": "Retrospective",
+      "description": "Sprint retro — what went well, what to improve",
+      "meeting_url": null,
+      "date": "2026-04-24",
+      "start_hour": 14,
+      "end_hour": 16,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-017",
+      "title": "Lunch & Learn: CI/CD",
+      "description": "Walkthrough of the new deployment pipeline",
+      "meeting_url": null,
+      "date": "2026-04-28",
+      "start_hour": 13,
+      "end_hour": 14,
+      "category_id": "cat-learning-004",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-018",
+      "title": "Team Dinner",
+      "description": "End-of-month team outing",
+      "meeting_url": null,
+      "date": "2026-04-29",
+      "start_hour": 18,
+      "end_hour": 20,
+      "category_id": "cat-social-005",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-019",
+      "title": "Product Demo",
+      "description": "End-of-month feature showcase",
+      "meeting_url": "https://teams.microsoft.com/l/meetup-join/def456",
+      "date": "2026-04-30",
+      "start_hour": 11,
+      "end_hour": 12,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-020",
+      "title": "Morning Focus Block",
+      "description": "Deep work — no meetings",
+      "meeting_url": null,
+      "date": "2026-05-04",
+      "start_hour": 9,
+      "end_hour": 11,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-021",
+      "title": "Sprint Planning",
+      "description": "Plan the next two-week sprint",
+      "meeting_url": "https://zoom.us/j/9876543210",
+      "date": "2026-05-05",
+      "start_hour": 10,
+      "end_hour": 12,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-022",
+      "title": "Gym",
+      "description": "Full body workout",
+      "meeting_url": null,
+      "date": "2026-05-06",
+      "start_hour": 17,
+      "end_hour": 18,
+      "category_id": "cat-health-003",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-023",
+      "title": "Online Workshop: TypeScript Patterns",
+      "description": "Advanced TS patterns for large codebases",
+      "meeting_url": null,
+      "date": "2026-05-07",
+      "start_hour": 15,
+      "end_hour": 17,
+      "category_id": "cat-learning-004",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     }
   ],
   "tasks": [
@@ -111,44 +315,44 @@
       "title": "Finish API endpoint for user profiles",
       "completed": 0,
       "priority": "high",
-      "date": "2025-04-07",
+      "date": "2026-04-06",
       "sort_order": 0,
       "category_id": "cat-work-001",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "task-002",
       "title": "Write unit tests for auth module",
       "completed": 0,
       "priority": "medium",
-      "date": "2025-04-07",
-      "sort_order": 1,
+      "date": "2026-04-07",
+      "sort_order": 0,
       "category_id": "cat-work-001",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "task-003",
       "title": "Buy groceries",
       "completed": 1,
       "priority": "low",
-      "date": "2025-04-07",
-      "sort_order": 2,
+      "date": "2026-04-06",
+      "sort_order": 1,
       "category_id": "cat-personal-002",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "task-004",
       "title": "Update project README",
       "completed": 0,
       "priority": "low",
-      "date": "2025-04-08",
+      "date": "2026-04-09",
       "sort_order": 0,
       "category_id": "cat-work-001",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "task-005",
@@ -156,26 +360,99 @@
       "completed": 0,
       "priority": "medium",
       "date": null,
-      "sort_order": 3,
+      "sort_order": 2,
       "category_id": "cat-personal-002",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-006",
+      "title": "Prepare architecture proposal doc",
+      "completed": 0,
+      "priority": "high",
+      "date": "2026-04-17",
+      "sort_order": 0,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-007",
+      "title": "Finish TypeScript patterns course",
+      "completed": 0,
+      "priority": "low",
+      "date": "2026-04-20",
+      "sort_order": 0,
+      "category_id": "cat-learning-004",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-008",
+      "title": "Review staging deploy checklist",
+      "completed": 0,
+      "priority": "medium",
+      "date": "2026-04-22",
+      "sort_order": 0,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-009",
+      "title": "Book flights for conference",
+      "completed": 0,
+      "priority": "high",
+      "date": "2026-04-28",
+      "sort_order": 0,
+      "category_id": "cat-personal-002",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-010",
+      "title": "Set up monitoring dashboards",
+      "completed": 0,
+      "priority": "medium",
+      "date": "2026-05-04",
+      "sort_order": 0,
+      "category_id": "cat-work-001",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-011",
+      "title": "Plan birthday dinner",
+      "completed": 0,
+      "priority": "medium",
+      "date": "2026-05-06",
+      "sort_order": 0,
+      "category_id": "cat-social-005",
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     }
   ],
   "daily_notes": [
     {
       "id": "note-001",
-      "date": "2025-04-07",
+      "date": "2026-04-06",
       "content": "Productive morning — knocked out the focus block without interruptions. Sprint planning went smoothly, team aligned on priorities for the week.",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-06T18:00:00.000Z",
+      "updated_at": "2026-04-06T18:00:00.000Z"
     },
     {
       "id": "note-002",
-      "date": "2025-04-08",
+      "date": "2026-04-07",
       "content": "Design review surfaced a few UX issues with the sidebar navigation. Need to follow up with the design team tomorrow.",
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-07T18:00:00.000Z",
+      "updated_at": "2026-04-07T18:00:00.000Z"
+    },
+    {
+      "id": "note-003",
+      "date": "2026-04-13",
+      "content": "Product demo went well — stakeholders happy with the progress. A few tweaks requested for the onboarding flow.",
+      "created_at": "2026-04-13T18:00:00.000Z",
+      "updated_at": "2026-04-13T18:00:00.000Z"
     }
   ],
   "note_sections": [
@@ -183,13 +460,13 @@
       "id": "section-001",
       "name": "Project Notes",
       "sort_order": 0,
-      "created_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "section-002",
       "name": "Meeting Notes",
       "sort_order": 1,
-      "created_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z"
     }
   ],
   "note_pages": [
@@ -199,17 +476,26 @@
       "title": "Dashboard Redesign",
       "content": "## Goals\n- Simplify the main navigation\n- Add quick-action buttons to the header\n- Improve mobile responsiveness\n\n## Open Questions\n- Should we keep the sidebar on mobile?\n- What analytics do users actually check daily?",
       "sort_order": 0,
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-01T08:00:00.000Z",
+      "updated_at": "2026-04-01T08:00:00.000Z"
     },
     {
       "id": "page-002",
       "section_id": "section-002",
-      "title": "Sprint Planning — Apr 7",
+      "title": "Sprint Planning — Apr 6",
       "content": "## Action Items\n- Finalize API schema for user profiles\n- Set up staging environment\n- Review and merge auth module PRs\n\n## Notes\nTeam agreed to reduce WIP limit to 3 items per person this sprint.",
       "sort_order": 0,
-      "created_at": "2025-04-01T08:00:00.000Z",
-      "updated_at": "2025-04-01T08:00:00.000Z"
+      "created_at": "2026-04-06T12:00:00.000Z",
+      "updated_at": "2026-04-06T12:00:00.000Z"
+    },
+    {
+      "id": "page-003",
+      "section_id": "section-002",
+      "title": "Architecture Discussion — Apr 20",
+      "content": "## Proposal\n- Migrate payment service to standalone microservice\n- Keep user service monolithic for now\n- Introduce API gateway for routing\n\n## Concerns\n- Team capacity for migration during Q2\n- Need to maintain backwards compatibility for mobile clients",
+      "sort_order": 1,
+      "created_at": "2026-04-20T12:00:00.000Z",
+      "updated_at": "2026-04-20T12:00:00.000Z"
     }
   ]
 }
