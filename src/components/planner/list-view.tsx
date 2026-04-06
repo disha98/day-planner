@@ -10,7 +10,7 @@ import {
   isSameDay,
   parseISO,
 } from "date-fns";
-import { Calendar, CheckCircle2, Circle, Video } from "lucide-react";
+import { Calendar, CheckCircle2, Circle, Plus, Video } from "lucide-react";
 import { TimeBlock, Task, Category } from "@/types";
 import { useTimeBlocks } from "@/lib/hooks/use-time-blocks";
 import { useTasks } from "@/lib/hooks/use-tasks";
@@ -21,6 +21,7 @@ interface ListViewProps {
   categories: Category[];
   onEditBlock: (block: TimeBlock) => void;
   onDayClick: (date: string) => void;
+  onAddBlock: () => void;
 }
 
 function formatHour(hour: number): string {
@@ -44,6 +45,7 @@ export function ListView({
   categories,
   onEditBlock,
   onDayClick,
+  onAddBlock,
 }: ListViewProps) {
   const [range, setRange] = useState<"week" | "two-weeks">("week");
 
@@ -141,14 +143,23 @@ export function ListView({
       {/* Filter bar */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold text-stone-800">Upcoming</h2>
-        <select
-          value={range}
-          onChange={(e) => setRange(e.target.value as "week" | "two-weeks")}
-          className="text-sm border border-stone-200 rounded-md px-2 py-1 text-stone-600 bg-white focus:outline-none focus:ring-1 focus:ring-stone-300"
-        >
-          <option value="week">This week</option>
-          <option value="two-weeks">Next 2 weeks</option>
-        </select>
+        <div className="flex items-center gap-2">
+          <select
+            value={range}
+            onChange={(e) => setRange(e.target.value as "week" | "two-weeks")}
+            className="text-sm border border-stone-200 rounded-md px-2 py-1 text-stone-600 bg-white focus:outline-none focus:ring-1 focus:ring-stone-300"
+          >
+            <option value="week">This week</option>
+            <option value="two-weeks">Next 2 weeks</option>
+          </select>
+          <button
+            onClick={onAddBlock}
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-stone-600 hover:text-stone-800 border border-stone-200 rounded-md px-2.5 py-1 hover:bg-stone-50 transition-colors"
+          >
+            <Plus size={14} />
+            Add event
+          </button>
+        </div>
       </div>
 
       {/* Day sections */}

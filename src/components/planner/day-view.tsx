@@ -1,10 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
-import { format, startOfWeek } from "date-fns";
+import { format } from "date-fns";
 import { Clock, CalendarX2, Plus } from "lucide-react";
 import { TimeBlock, Category } from "@/types";
-import { useTimeBlocks } from "@/lib/hooks/use-time-blocks";
 import { useTasks } from "@/lib/hooks/use-tasks";
 import { TaskItem } from "@/components/tasks/task-item";
 import { TaskInput } from "@/components/tasks/task-input";
@@ -12,6 +11,8 @@ import { DailyNotes } from "@/components/notes/daily-notes";
 
 interface DayViewProps {
   date: Date;
+  blocks: TimeBlock[];
+  blocksLoading?: boolean;
   categories: Category[];
   onEditBlock: (block: TimeBlock) => void;
   onAddBlock: () => void;
@@ -23,12 +24,9 @@ function formatHour(hour: number): string {
   return `${h}:00 ${period}`;
 }
 
-export function DayView({ date, categories, onEditBlock, onAddBlock }: DayViewProps) {
+export function DayView({ date, blocks, blocksLoading = false, categories, onEditBlock, onAddBlock }: DayViewProps) {
   const dateStr = format(date, "yyyy-MM-dd");
-  const weekStart = startOfWeek(date, { weekStartsOn: 1 });
-  const weekStartStr = format(weekStart, "yyyy-MM-dd");
 
-  const { blocks, loading: blocksLoading } = useTimeBlocks(weekStartStr);
   const { tasks, loading: tasksLoading, createTask, updateTask, deleteTask } = useTasks(dateStr);
 
   const dayBlocks = useMemo(() => {

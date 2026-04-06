@@ -85,6 +85,7 @@ export default function DayPageClient({ dateParam }: DayPageClientProps) {
       <div className="flex-1 overflow-auto">
         <DayView
           date={date}
+          blocks={blocks}
           categories={categories}
           onEditBlock={handleBlockClick}
           onAddBlock={handleAddBlock}

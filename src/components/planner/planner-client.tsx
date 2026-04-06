@@ -147,6 +147,7 @@ export default function PlannerClient() {
               categories={categories}
               onEditBlock={handleBlockClick}
               onDayClick={handleDayClick}
+              onAddBlock={handleAddBlock}
             />
           </div>
         )}
@@ -155,6 +156,7 @@ export default function PlannerClient() {
           <div className="flex-1 overflow-auto">
             <DayView
               date={selectedDateObj}
+              blocks={blocks}
               categories={categories}
               onEditBlock={handleBlockClick}
               onAddBlock={handleAddBlock}
