@@ -2,9 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { startOfWeek, format, parseISO } from "date-fns";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Header } from "@/components/layout/header";
-import { LeftNav } from "@/components/layout/left-nav";
 import { Sidebar } from "@/components/layout/sidebar";
 import { WeeklyGrid } from "@/components/planner/weekly-grid";
 import { ListView } from "@/components/planner/list-view";
@@ -14,17 +13,18 @@ import { DayNavigator } from "@/components/planner/day-navigator";
 import { TimeBlockModal } from "@/components/planner/time-block-modal";
 import { useTimeBlocks } from "@/lib/hooks/use-time-blocks";
 import { useCategories } from "@/lib/hooks/use-categories";
-import { SettingsView } from "@/components/settings/settings-view";
-import { ImportView } from "@/components/import/import-view";
-import { NotesView } from "@/components/notes/notes-view";
-import { TodoView } from "@/components/todos/todo-view";
 import { TimeBlock } from "@/types";
 
-type ViewType = "calendar" | "list" | "day" | "notes" | "todos" | "import" | "settings";
+type ViewType = "calendar" | "list" | "day";
 
 export default function PlannerClient() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const viewParam = searchParams.get("view");
+  const activeView: ViewType =
+    viewParam === "calendar" || viewParam === "day" ? viewParam : "list";
+
   const now = new Date();
-  const [activeView, setActiveView] = useState<ViewType>("list");
   const [weekStart, setWeekStart] = useState(() =>
     startOfWeek(now, { weekStartsOn: 1 })
   );
@@ -90,8 +90,6 @@ export default function PlannerClient() {
     [deleteBlock]
   );
 
-  const router = useRouter();
-
   const handleDayClick = useCallback((dateStr: string) => {
     router.push(`/day/${dateStr}`);
   }, [router]);
@@ -104,96 +102,65 @@ export default function PlannerClient() {
   const selectedDateObj = parseISO(selectedDate);
 
   return (
-    <div className="flex h-screen">
-      <LeftNav activeView={activeView} onViewChange={setActiveView} />
+    <>
+      <Header
+        title={
+          activeView === "calendar" ? "Calendar" :
+          activeView === "day" ? "Day" :
+          "Upcoming"
+        }
+      >
+        {activeView === "calendar" && (
+          <DateNavigator weekStart={weekStart} onWeekChange={setWeekStart} />
+        )}
+        {activeView === "day" && (
+          <DayNavigator
+            date={selectedDateObj}
+            onDateChange={handleDayDateChange}
+          />
+        )}
+      </Header>
 
-      <div className="flex flex-col flex-1 min-w-0">
-        <Header
-          title={
-            activeView === "calendar" ? "Calendar" :
-            activeView === "list" ? "Upcoming" :
-            activeView === "day" ? "Day" :
-            activeView === "notes" ? "Notes" :
-            activeView === "todos" ? "To-Do" :
-            activeView === "import" ? "Import" :
-            activeView === "settings" ? "Settings" :
-            "Day Planner"
-          }
-        >
-          {activeView === "calendar" && (
-            <DateNavigator weekStart={weekStart} onWeekChange={setWeekStart} />
-          )}
-          {activeView === "day" && (
-            <DayNavigator
-              date={selectedDateObj}
-              onDateChange={handleDayDateChange}
-            />
-          )}
-        </Header>
-
-        <div className="flex flex-1 overflow-hidden">
-          {activeView === "calendar" && (
-            <>
-              <div className="flex-1 overflow-auto">
-                <WeeklyGrid
-                  weekStart={weekStart}
-                  blocks={blocks}
-                  selectedDate={selectedDate}
-                  onSelectDate={setSelectedDate}
-                  onSlotClick={handleSlotClick}
-                  onBlockClick={handleBlockClick}
-                  onUpdateBlock={updateBlock}
-                />
-              </div>
-              <Sidebar selectedDate={selectedDate} categories={categories} />
-            </>
-          )}
-
-          {activeView === "list" && (
+      <div className="flex flex-1 overflow-hidden">
+        {activeView === "calendar" && (
+          <>
             <div className="flex-1 overflow-auto">
-              <ListView
+              <WeeklyGrid
                 weekStart={weekStart}
                 blocks={blocks}
-                categories={categories}
-                onEditBlock={handleBlockClick}
-                onDayClick={handleDayClick}
+                selectedDate={selectedDate}
+                onSelectDate={setSelectedDate}
+                onSlotClick={handleSlotClick}
+                onBlockClick={handleBlockClick}
+                onUpdateBlock={updateBlock}
               />
             </div>
-          )}
+            <Sidebar selectedDate={selectedDate} categories={categories} />
+          </>
+        )}
 
-          {activeView === "day" && (
-            <div className="flex-1 overflow-auto">
-              <DayView
-                date={selectedDateObj}
-                categories={categories}
-                onEditBlock={handleBlockClick}
-                onAddBlock={handleAddBlock}
-              />
-            </div>
-          )}
+        {activeView === "list" && (
+          <div className="flex-1 overflow-auto">
+            <ListView
+              weekStart={weekStart}
+              blocks={blocks}
+              categories={categories}
+              onEditBlock={handleBlockClick}
+              onDayClick={handleDayClick}
+            />
+          </div>
+        )}
 
-          {activeView === "notes" && (
-            <NotesView />
-          )}
-
-          {activeView === "todos" && (
-            <div className="flex-1 overflow-auto">
-              <TodoView />
-            </div>
-          )}
-
-          {activeView === "import" && (
-            <div className="flex-1 overflow-auto">
-              <ImportView onComplete={() => setActiveView("list")} />
-            </div>
-          )}
-
-          {activeView === "settings" && (
-            <div className="flex-1 overflow-auto">
-              <SettingsView />
-            </div>
-          )}
-        </div>
+        {activeView === "day" && (
+          <div className="flex-1 overflow-auto">
+            <DayView
+              date={selectedDateObj}
+              categories={categories}
+              onEditBlock={handleBlockClick}
+              onAddBlock={handleAddBlock}
+            />
+          </div>
+        )}
       </div>
 
       <TimeBlockModal
@@ -206,6 +173,6 @@ export default function PlannerClient() {
         onSave={handleSave}
         onDelete={editingBlock ? handleDelete : undefined}
       />
-    </div>
+    </>
   );
 }

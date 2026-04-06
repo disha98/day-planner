@@ -4,6 +4,19 @@ A Notion-style weekly day planner for organizing your time blocks, tasks, and no
 
 **Live demo:** [day-planner-phi.vercel.app](https://day-planner-phi.vercel.app/)
 
+## Sample Data
+
+The `samples/` directory contains test files for trying out the import feature:
+
+- **`sample-calendar.ics`** — Calendar events across 5 weeks, including recurring standups, meetings with video call URLs (Zoom, Meet, Teams), and an all-day event
+- **`sample-backup.json`** — Full backup with 5 categories, 23 time blocks, 11 tasks, 3 daily notes, and 3 note pages across 5 weeks
+
+To test:
+
+1. Go to **Import** in the sidebar
+2. Choose **Calendar (.ics)** or **Backup (.json)**
+3. Upload the corresponding sample file from `samples/`
+
 ## Features
 
 - **Weekly Grid** — Visual calendar view with draggable time blocks
@@ -40,19 +53,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Sample Data
-
-The `samples/` directory contains test files for trying out the import feature:
-
-- **`sample-calendar.ics`** — 13 calendar events across a week, including recurring standups, meetings with video call URLs, and an all-day event
-- **`sample-backup.json`** — Full backup with 3 categories, 7 time blocks, 5 tasks, 2 daily notes, and 2 note pages
-
-To test:
-
-1. Go to **Import** in the sidebar
-2. Choose **Calendar (.ics)** or **Backup (.json)**
-3. Upload the corresponding sample file from `samples/`
-
 ## Scripts
 
 | Command | Description |
@@ -62,15 +62,41 @@ To test:
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
 
+## Pages & Routes
+
+| Route | Description |
+|-------|-------------|
+| `/planner` | Main planner — switch between List, Day, and Week views via the sidebar |
+| `/planner?view=calendar` | Weekly calendar grid with draggable time blocks |
+| `/planner?view=day` | Single-day view with hour-by-hour breakdown |
+| `/notes` | Organize notes into sections and pages, with auto-saving |
+| `/todos` | Task management with priorities and completion tracking |
+| `/import` | Import `.ics` calendar files or restore a JSON backup |
+| `/settings` | Manage categories and export all data |
+| `/day/[date]` | Dynamic route — detailed day view for a specific date (e.g. `/day/2026-04-10`) |
+
+All pages share a sidebar layout with navigation between them.
+
 ## Project Structure
 
 ```
 src/
-├── app/                  # Pages & API routes
+├── app/
+│   ├── layout.tsx              # Root layout (font, html)
+│   ├── page.tsx                # Home — redirects to /planner
+│   └── (app)/                  # Route group with shared sidebar layout
+│       ├── layout.tsx          # Shared layout (LeftNav + content area)
+│       ├── planner/page.tsx    # List / Day / Week views
+│       ├── notes/page.tsx      # Notes
+│       ├── todos/page.tsx      # To-Do
+│       ├── import/page.tsx     # Import
+│       ├── settings/page.tsx   # Settings
+│       └── day/[date]/page.tsx # Dynamic day detail
 ├── components/
 │   ├── layout/           # Header, sidebar navigation
 │   ├── planner/          # Weekly grid, day view, time blocks, modals
 │   ├── tasks/            # Task list, priority badges
+│   ├── todos/            # To-do view, input
 │   ├── notes/            # Sections, pages, editor
 │   ├── import/           # Calendar & backup import
 │   ├── settings/         # Category management, data export

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
 const Planner = dynamic(() => import("@/components/planner/planner-client"), {
@@ -12,5 +13,9 @@ const Planner = dynamic(() => import("@/components/planner/planner-client"), {
 });
 
 export default function PlannerPage() {
-  return <Planner />;
+  return (
+    <Suspense>
+      <Planner />
+    </Suspense>
+  );
 }

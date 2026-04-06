@@ -4,7 +4,6 @@ import { useState, useCallback } from "react";
 import { parseISO, isValid, format, startOfWeek } from "date-fns";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout/header";
-import { LeftNav } from "@/components/layout/left-nav";
 import { DayNavigator } from "@/components/planner/day-navigator";
 import { DayView } from "@/components/planner/day-view";
 import { TimeBlockModal } from "@/components/planner/time-block-modal";
@@ -69,11 +68,6 @@ export default function DayPageClient({ dateParam }: DayPageClientProps) {
     router.push(`/day/${format(newDate, "yyyy-MM-dd")}`);
   }, [router]);
 
-  const handleViewChange = useCallback((view: string) => {
-    if (view === "day") return;
-    router.push("/planner");
-  }, [router]);
-
   if (!isValid(date)) {
     return (
       <div className="flex h-screen items-center justify-center text-stone-500 text-sm">
@@ -83,22 +77,18 @@ export default function DayPageClient({ dateParam }: DayPageClientProps) {
   }
 
   return (
-    <div className="flex h-screen">
-      <LeftNav activeView="day" onViewChange={handleViewChange} />
+    <>
+      <Header title="Day">
+        <DayNavigator date={date} onDateChange={handleDateChange} />
+      </Header>
 
-      <div className="flex flex-col flex-1 min-w-0">
-        <Header>
-          <DayNavigator date={date} onDateChange={handleDateChange} />
-        </Header>
-
-        <div className="flex-1 overflow-auto">
-          <DayView
-            date={date}
-            categories={categories}
-            onEditBlock={handleBlockClick}
-            onAddBlock={handleAddBlock}
-          />
-        </div>
+      <div className="flex-1 overflow-auto">
+        <DayView
+          date={date}
+          categories={categories}
+          onEditBlock={handleBlockClick}
+          onAddBlock={handleAddBlock}
+        />
       </div>
 
       <TimeBlockModal
@@ -111,6 +101,6 @@ export default function DayPageClient({ dateParam }: DayPageClientProps) {
         onSave={handleSave}
         onDelete={editingBlock ? handleDelete : undefined}
       />
-    </div>
+    </>
   );
 }
