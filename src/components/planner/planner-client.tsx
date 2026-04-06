@@ -16,9 +16,11 @@ import { useTimeBlocks } from "@/lib/hooks/use-time-blocks";
 import { useCategories } from "@/lib/hooks/use-categories";
 import { SettingsView } from "@/components/settings/settings-view";
 import { ImportView } from "@/components/import/import-view";
+import { NotesView } from "@/components/notes/notes-view";
+import { TodoView } from "@/components/todos/todo-view";
 import { TimeBlock } from "@/types";
 
-type ViewType = "calendar" | "list" | "day" | "import" | "settings";
+type ViewType = "calendar" | "list" | "day" | "notes" | "todos" | "import" | "settings";
 
 export default function PlannerClient() {
   const now = new Date();
@@ -64,6 +66,7 @@ export default function PlannerClient() {
     async (data: {
       title: string;
       description?: string;
+      meeting_url?: string;
       date: string;
       start_hour: number;
       end_hour: number;
@@ -105,7 +108,18 @@ export default function PlannerClient() {
       <LeftNav activeView={activeView} onViewChange={setActiveView} />
 
       <div className="flex flex-col flex-1 min-w-0">
-        <Header>
+        <Header
+          title={
+            activeView === "calendar" ? "Calendar" :
+            activeView === "list" ? "Upcoming" :
+            activeView === "day" ? "Day" :
+            activeView === "notes" ? "Notes" :
+            activeView === "todos" ? "To-Do" :
+            activeView === "import" ? "Import" :
+            activeView === "settings" ? "Settings" :
+            "Day Planner"
+          }
+        >
           {activeView === "calendar" && (
             <DateNavigator weekStart={weekStart} onWeekChange={setWeekStart} />
           )}
@@ -114,17 +128,6 @@ export default function PlannerClient() {
               date={selectedDateObj}
               onDateChange={handleDayDateChange}
             />
-          )}
-          {activeView === "list" && (
-            <span className="text-sm text-stone-500">
-              Upcoming events & tasks
-            </span>
-          )}
-          {activeView === "settings" && (
-            <span className="text-sm text-stone-500">Settings</span>
-          )}
-          {activeView === "import" && (
-            <span className="text-sm text-stone-500">Import Calendar</span>
           )}
         </Header>
 
@@ -139,6 +142,7 @@ export default function PlannerClient() {
                   onSelectDate={setSelectedDate}
                   onSlotClick={handleSlotClick}
                   onBlockClick={handleBlockClick}
+                  onUpdateBlock={updateBlock}
                 />
               </div>
               <Sidebar selectedDate={selectedDate} categories={categories} />
@@ -165,6 +169,16 @@ export default function PlannerClient() {
                 onEditBlock={handleBlockClick}
                 onAddBlock={handleAddBlock}
               />
+            </div>
+          )}
+
+          {activeView === "notes" && (
+            <NotesView />
+          )}
+
+          {activeView === "todos" && (
+            <div className="flex-1 overflow-auto">
+              <TodoView />
             </div>
           )}
 

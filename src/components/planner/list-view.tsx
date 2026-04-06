@@ -10,7 +10,7 @@ import {
   isSameDay,
   parseISO,
 } from "date-fns";
-import { Calendar, CheckCircle2, Circle } from "lucide-react";
+import { Calendar, CheckCircle2, Circle, Video } from "lucide-react";
 import { TimeBlock, Task, Category } from "@/types";
 import { useTimeBlocks } from "@/lib/hooks/use-time-blocks";
 import { useTasks } from "@/lib/hooks/use-tasks";
@@ -182,10 +182,10 @@ export function ListView({
 
                 {/* Events */}
                 {dayBlocks.map((block) => (
-                  <button
+                  <div
                     key={block.id}
+                    className="group/row flex items-center gap-3 py-2 px-3 hover:bg-stone-50 rounded-md transition-colors cursor-pointer"
                     onClick={() => onEditBlock(block)}
-                    className="flex items-center gap-3 py-2 px-3 w-full text-left hover:bg-stone-50 rounded-md transition-colors"
                   >
                     <span
                       className="w-2 h-2 rounded-full flex-shrink-0"
@@ -196,9 +196,22 @@ export function ListView({
                     <span className="text-xs text-stone-500 w-20 flex-shrink-0">
                       {formatHour(block.start_hour)}
                     </span>
-                    <span className="text-sm text-stone-800 flex-1 truncate">
+                    <span className="text-sm text-stone-800 truncate">
                       {block.title}
                     </span>
+                    {block.meeting_url && (
+                      <a
+                        href={block.meeting_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 font-medium ml-2 px-2.5 py-1 rounded-md bg-blue-50 hover:bg-blue-100 transition-colors flex-shrink-0"
+                      >
+                        <Video size={13} />
+                        Join
+                      </a>
+                    )}
+                    <span className="flex-1" />
                     {block.category_name && block.category_color && (
                       <span
                         className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
@@ -210,7 +223,7 @@ export function ListView({
                         {block.category_name}
                       </span>
                     )}
-                  </button>
+                  </div>
                 ))}
 
                 {/* Tasks */}

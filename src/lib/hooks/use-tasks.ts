@@ -63,7 +63,8 @@ export function useTasks(date?: string) {
   }, [fetchTasks]);
 
   const updateTask = useCallback(async (id: string, data: Partial<Task>) => {
-    await db.tasks.update(id, { ...data, updated_at: new Date().toISOString() });
+    const { category_name, category_color, ...storable } = data;
+    await db.tasks.update(id, { ...storable, updated_at: new Date().toISOString() });
     await fetchTasks();
   }, [fetchTasks]);
 

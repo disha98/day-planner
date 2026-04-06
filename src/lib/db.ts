@@ -11,6 +11,7 @@ export interface TimeBlockRecord {
   id: string;
   title: string;
   description: string | null;
+  meeting_url: string | null;
   date: string;
   start_hour: number;
   end_hour: number;
@@ -39,11 +40,30 @@ export interface DailyNoteRecord {
   updated_at: string;
 }
 
+export interface NoteSectionRecord {
+  id: string;
+  name: string;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface NotePageRecord {
+  id: string;
+  section_id: string;
+  title: string;
+  content: string;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
 const db = new Dexie("DayPlannerDB") as Dexie & {
   categories: EntityTable<CategoryRecord, "id">;
   time_blocks: EntityTable<TimeBlockRecord, "id">;
   tasks: EntityTable<TaskRecord, "id">;
   daily_notes: EntityTable<DailyNoteRecord, "id">;
+  note_sections: EntityTable<NoteSectionRecord, "id">;
+  note_pages: EntityTable<NotePageRecord, "id">;
 };
 
 db.version(1).stores({
@@ -51,6 +71,28 @@ db.version(1).stores({
   time_blocks: "id, date, category_id",
   tasks: "id, date, priority, sort_order, category_id",
   daily_notes: "id, &date",
+});
+
+db.version(2).stores({
+  categories: "id, name",
+  time_blocks: "id, date, category_id",
+  tasks: "id, date, priority, sort_order, category_id",
+  daily_notes: "id, &date",
+}).upgrade((tx) => {
+  return tx.table("time_blocks").toCollection().modify((block) => {
+    if (!("meeting_url" in block)) {
+      block.meeting_url = null;
+    }
+  });
+});
+
+db.version(3).stores({
+  categories: "id, name",
+  time_blocks: "id, date, category_id",
+  tasks: "id, date, priority, sort_order, category_id",
+  daily_notes: "id, &date",
+  note_sections: "id, sort_order",
+  note_pages: "id, section_id, sort_order",
 });
 
 export default db;

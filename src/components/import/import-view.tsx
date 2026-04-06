@@ -16,6 +16,34 @@ interface ParsedEvent {
   start_hour: number;
   end_hour: number;
   allDay: boolean;
+  meeting_url: string | null;
+}
+
+function extractMeetingUrl(vevent: ICAL.Component): string | null {
+  const location = vevent.getFirstPropertyValue("location") as string | null;
+  const description = vevent.getFirstPropertyValue("description") as string | null;
+
+  // Check LOCATION first — Zoom/Meet often put the URL there
+  if (location) {
+    const urlMatch = location.match(/https?:\/\/[^\s,]+/);
+    if (urlMatch) return urlMatch[0];
+  }
+
+  // Fall back to DESCRIPTION
+  if (description) {
+    const meetingPatterns = [
+      /https?:\/\/[\w.-]*zoom\.us\/[^\s\\,]+/,
+      /https?:\/\/meet\.google\.com\/[^\s\\,]+/,
+      /https?:\/\/teams\.microsoft\.com\/[^\s\\,]+/,
+      /https?:\/\/[\w.-]*webex\.com\/[^\s\\,]+/,
+    ];
+    for (const pattern of meetingPatterns) {
+      const match = description.match(pattern);
+      if (match) return match[0];
+    }
+  }
+
+  return null;
 }
 
 const instructions = [
@@ -61,6 +89,7 @@ function parseICS(text: string): ParsedEvent[] {
   for (const vevent of vevents) {
     const event = new ICAL.Event(vevent);
     const title = event.summary || "Untitled";
+    const meetingUrl = extractMeetingUrl(vevent);
 
     if (event.isRecurring()) {
       try {
@@ -71,26 +100,26 @@ function parseICS(text: string): ParsedEvent[] {
           const start = next.toJSDate();
           const dur = event.duration?.toSeconds() || 3600;
           const end = new Date(start.getTime() + dur * 1000);
-          addEvent(events, seen, title, start, end);
+          addEvent(events, seen, title, start, end, meetingUrl);
           next = iter.next();
           count++;
         }
       } catch {
         const start = event.startDate?.toJSDate();
         const end = event.endDate?.toJSDate();
-        if (start) addEvent(events, seen, title, start, end || new Date(start.getTime() + 3600000));
+        if (start) addEvent(events, seen, title, start, end || new Date(start.getTime() + 3600000), meetingUrl);
       }
     } else {
       const start = event.startDate?.toJSDate();
       const end = event.endDate?.toJSDate();
-      if (start) addEvent(events, seen, title, start, end || new Date(start.getTime() + 3600000));
+      if (start) addEvent(events, seen, title, start, end || new Date(start.getTime() + 3600000), meetingUrl);
     }
   }
 
   return events.sort((a, b) => a.date.localeCompare(b.date) || a.start_hour - b.start_hour);
 }
 
-function addEvent(events: ParsedEvent[], seen: Set<string>, title: string, start: Date, end: Date) {
+function addEvent(events: ParsedEvent[], seen: Set<string>, title: string, start: Date, end: Date, meetingUrl: string | null = null) {
   const date = `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, "0")}-${String(start.getDate()).padStart(2, "0")}`;
   const startHour = start.getHours();
   const endHour = end.getHours() || 24;
@@ -106,6 +135,7 @@ function addEvent(events: ParsedEvent[], seen: Set<string>, title: string, start
     start_hour: startHour,
     end_hour: Math.min(endHour <= startHour ? startHour + 1 : endHour, 23),
     allDay,
+    meeting_url: meetingUrl,
   });
 }
 
@@ -116,6 +146,7 @@ function formatHour(h: number) {
 }
 
 export function ImportView({ onComplete }: ImportViewProps) {
+  const [mode, setMode] = useState<"calendar" | "backup">("calendar");
   const [step, setStep] = useState(1);
   const [expandedGuide, setExpandedGuide] = useState<number | null>(null);
   const [events, setEvents] = useState<ParsedEvent[]>([]);
@@ -128,6 +159,8 @@ export function ImportView({ onComplete }: ImportViewProps) {
   const [error, setError] = useState("");
   const [fileName, setFileName] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const backupRef = useRef<HTMLInputElement>(null);
+  const [backupStatus, setBackupStatus] = useState("");
 
   useEffect(() => {
     db.categories.toArray().then(setCategories);
@@ -177,6 +210,7 @@ export function ImportView({ onComplete }: ImportViewProps) {
       id: crypto.randomUUID(),
       title: e.title,
       description: null,
+      meeting_url: e.meeting_url,
       date: e.date,
       start_hour: e.start_hour,
       end_hour: e.end_hour,
@@ -189,6 +223,48 @@ export function ImportView({ onComplete }: ImportViewProps) {
     setImported(true);
     setImporting(false);
   }, [filteredEvents, categoryId]);
+
+  const importBackup = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+
+      await db.transaction("rw", [db.categories, db.time_blocks, db.tasks, db.daily_notes, db.note_sections, db.note_pages], async () => {
+        if (data.categories?.length) {
+          await db.categories.clear();
+          await db.categories.bulkAdd(data.categories);
+        }
+        if (data.time_blocks?.length) {
+          await db.time_blocks.clear();
+          await db.time_blocks.bulkAdd(data.time_blocks);
+        }
+        if (data.tasks?.length) {
+          await db.tasks.clear();
+          await db.tasks.bulkAdd(data.tasks);
+        }
+        if (data.daily_notes?.length) {
+          await db.daily_notes.clear();
+          await db.daily_notes.bulkAdd(data.daily_notes);
+        }
+        if (data.note_sections?.length) {
+          await db.note_sections.clear();
+          await db.note_sections.bulkAdd(data.note_sections);
+        }
+        if (data.note_pages?.length) {
+          await db.note_pages.clear();
+          await db.note_pages.bulkAdd(data.note_pages);
+        }
+      });
+
+      const total = (data.categories?.length || 0) + (data.time_blocks?.length || 0) + (data.tasks?.length || 0) + (data.daily_notes?.length || 0) + (data.note_sections?.length || 0) + (data.note_pages?.length || 0);
+      setBackupStatus(`Imported ${total} items`);
+    } catch {
+      setBackupStatus("Failed to import — invalid file format.");
+    }
+    if (backupRef.current) backupRef.current.value = "";
+  }, []);
 
   // Success state
   if (imported) {
@@ -210,13 +286,74 @@ export function ImportView({ onComplete }: ImportViewProps) {
 
   return (
     <div className="max-w-2xl mx-auto p-8">
-      <h2 className="text-lg font-semibold text-stone-800 mb-1">
-        Import Calendar Events
-      </h2>
-      <p className="text-sm text-stone-500 mb-8">
-        Import events from Apple Calendar, Google Calendar, or Outlook.
+      <h2 className="text-lg font-semibold text-stone-800 mb-1">Import</h2>
+      <p className="text-sm text-stone-500 mb-6">
+        Import calendar events or restore from a backup.
       </p>
 
+      {/* Mode toggle */}
+      <div className="flex gap-1 mb-8 bg-stone-100 rounded-lg p-1 w-fit">
+        <button
+          onClick={() => setMode("calendar")}
+          className={`text-sm px-4 py-1.5 rounded-md transition-colors ${
+            mode === "calendar"
+              ? "bg-white text-stone-800 shadow-sm font-medium"
+              : "text-stone-500 hover:text-stone-700"
+          }`}
+        >
+          Calendar (.ics)
+        </button>
+        <button
+          onClick={() => setMode("backup")}
+          className={`text-sm px-4 py-1.5 rounded-md transition-colors ${
+            mode === "backup"
+              ? "bg-white text-stone-800 shadow-sm font-medium"
+              : "text-stone-500 hover:text-stone-700"
+          }`}
+        >
+          Backup (.json)
+        </button>
+      </div>
+
+      {/* Backup import */}
+      {mode === "backup" && (
+        <div>
+          <p className="text-sm text-stone-600 mb-4">
+            Upload a JSON backup file exported from Settings to restore all your data
+            (categories, events, tasks, and notes).
+          </p>
+          <div
+            onClick={() => backupRef.current?.click()}
+            className="border-2 border-dashed border-stone-200 rounded-lg p-8 text-center cursor-pointer hover:border-stone-400 hover:bg-stone-50 transition-colors"
+          >
+            <Upload size={24} className="mx-auto mb-2 text-stone-400" />
+            <p className="text-sm text-stone-600">
+              Drop .json backup file here or click to browse
+            </p>
+            <input
+              ref={backupRef}
+              type="file"
+              accept=".json"
+              onChange={importBackup}
+              className="hidden"
+            />
+          </div>
+          {backupStatus && (
+            <p className={`mt-3 text-sm ${backupStatus.startsWith("Failed") ? "text-red-500" : "text-green-600"}`}>
+              {backupStatus}
+            </p>
+          )}
+          {backupStatus && !backupStatus.startsWith("Failed") && (
+            <Button className="mt-4" onClick={onComplete}>
+              Go to List View
+            </Button>
+          )}
+        </div>
+      )}
+
+      {/* Calendar import - Step 1 */}
+      {mode === "calendar" && (
+      <>
       {/* Step 1 */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-3">
@@ -379,6 +516,8 @@ export function ImportView({ onComplete }: ImportViewProps) {
             </Button>
           </div>
         </div>
+      )}
+      </>
       )}
     </div>
   );

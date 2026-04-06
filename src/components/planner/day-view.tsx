@@ -101,19 +101,32 @@ export function DayView({ date, categories, onEditBlock, onAddBlock }: DayViewPr
                   <p className="text-sm font-medium text-stone-800 mt-0.5 truncate">
                     {block.title}
                   </p>
-                  {block.category_name && (
-                    <span
-                      className="inline-block mt-1.5 text-[11px] px-1.5 py-0.5 rounded-full font-medium"
-                      style={{
-                        backgroundColor: block.category_color
-                          ? `${block.category_color}18`
-                          : "#f5f5f4",
-                        color: block.category_color || "#78716c",
-                      }}
-                    >
-                      {block.category_name}
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                    {block.category_name && (
+                      <span
+                        className="inline-block text-[11px] px-1.5 py-0.5 rounded-full font-medium"
+                        style={{
+                          backgroundColor: block.category_color
+                            ? `${block.category_color}18`
+                            : "#f5f5f4",
+                          color: block.category_color || "#78716c",
+                        }}
+                      >
+                        {block.category_name}
+                      </span>
+                    )}
+                    {block.meeting_url && (
+                      <a
+                        href={block.meeting_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1 text-[11px] text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        Join meeting
+                      </a>
+                    )}
+                  </div>
                 </div>
               </button>
             ))}

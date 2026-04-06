@@ -18,6 +18,7 @@ interface TimeBlockModalProps {
   onSave: (data: {
     title: string;
     description?: string;
+    meeting_url?: string;
     date: string;
     start_hour: number;
     end_hour: number;
@@ -57,6 +58,8 @@ export function TimeBlockModal({
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [meetingUrl, setMeetingUrl] = useState("");
+  const [blockDate, setBlockDate] = useState(date);
   const [startHour, setStartHour] = useState(defaultStart);
   const [endHour, setEndHour] = useState(defaultEnd);
   const [categoryId, setCategoryId] = useState<string>("");
@@ -65,11 +68,13 @@ export function TimeBlockModal({
     if (open) {
       setTitle(block?.title ?? "");
       setDescription(block?.description ?? "");
+      setMeetingUrl(block?.meeting_url ?? "");
+      setBlockDate(block?.date ?? date);
       setStartHour(hour ?? block?.start_hour ?? 9);
       setEndHour(block?.end_hour ?? Math.min((hour ?? block?.start_hour ?? 9) + 1, 22));
       setCategoryId(block?.category_id ?? "");
     }
-  }, [open, block, hour]);
+  }, [open, block, hour, date]);
 
   const hourOptions = buildHourOptions();
 
@@ -78,17 +83,17 @@ export function TimeBlockModal({
     ...categories.map((c) => ({ value: c.id, label: c.name })),
   ];
 
-  function handleSave() {
+  async function handleSave() {
     if (!title.trim()) return;
-    onSave({
+    await onSave({
       title: title.trim(),
       description: description.trim() || undefined,
-      date,
+      meeting_url: meetingUrl.trim() || undefined,
+      date: blockDate,
       start_hour: startHour,
       end_hour: endHour,
       category_id: categoryId || undefined,
     });
-    onClose();
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -126,6 +131,20 @@ export function TimeBlockModal({
             className="w-full text-sm px-3 py-2 rounded-md border border-stone-200 bg-white text-stone-800 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors resize-none"
           />
         </div>
+
+        <Input
+          label="Meeting link"
+          placeholder="https://zoom.us/j/... or https://meet.google.com/..."
+          value={meetingUrl}
+          onChange={(e) => setMeetingUrl(e.target.value)}
+        />
+
+        <Input
+          label="Date"
+          type="date"
+          value={blockDate}
+          onChange={(e) => setBlockDate(e.target.value)}
+        />
 
         <div className="grid grid-cols-2 gap-3">
           <Select

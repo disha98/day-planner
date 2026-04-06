@@ -42,6 +42,7 @@ export function useTimeBlocks(weekStart: string) {
   const createBlock = useCallback(async (data: {
     title: string;
     description?: string;
+    meeting_url?: string;
     date: string;
     start_hour: number;
     end_hour: number;
@@ -52,6 +53,7 @@ export function useTimeBlocks(weekStart: string) {
       id: crypto.randomUUID(),
       title: data.title,
       description: data.description || null,
+      meeting_url: data.meeting_url || null,
       date: data.date,
       start_hour: data.start_hour,
       end_hour: data.end_hour,
@@ -65,7 +67,9 @@ export function useTimeBlocks(weekStart: string) {
   }, [fetchBlocks]);
 
   const updateBlock = useCallback(async (id: string, data: Partial<TimeBlock>) => {
-    await db.time_blocks.update(id, { ...data, updated_at: new Date().toISOString() });
+    // Only write storable fields, not enriched ones
+    const { category_name, category_color, ...storable } = data;
+    await db.time_blocks.update(id, { ...storable, updated_at: new Date().toISOString() });
     await fetchBlocks();
   }, [fetchBlocks]);
 

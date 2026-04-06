@@ -2,6 +2,7 @@
 
 import { useMemo, useEffect, useState } from "react";
 import { format } from "date-fns";
+import { useDroppable } from "@dnd-kit/core";
 import { TimeBlock } from "@/types";
 import { HourSlot } from "@/components/planner/hour-slot";
 import { TimeBlockCard } from "@/components/planner/time-block-card";
@@ -34,6 +35,8 @@ export function DayColumn({
   const dayNum = format(date, "d");
   const isSelected = selectedDate === dateStr;
 
+  const { setNodeRef, isOver } = useDroppable({ id: dateStr });
+
   const hours = useMemo(() => {
     const h: number[] = [];
     for (let i = START_HOUR; i < END_HOUR; i++) {
@@ -59,7 +62,7 @@ export function DayColumn({
   }, [isToday, now]);
 
   return (
-    <div className="flex flex-col border-r border-stone-100 last:border-r-0 min-w-0">
+    <div ref={setNodeRef} className={`flex flex-col border-r border-stone-100 last:border-r-0 min-w-0 transition-colors ${isOver ? "bg-blue-50/40" : ""}`}>
       {/* Column header */}
       <button
         type="button"

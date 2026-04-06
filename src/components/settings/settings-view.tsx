@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useCategories } from "@/lib/hooks/use-categories";
 import db from "@/lib/db";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2, Plus, Check, X, Download, Upload } from "lucide-react";
+import { Pencil, Trash2, Plus, Check, X, Download } from "lucide-react";
 import { Category } from "@/types";
 
 export function SettingsView() {
@@ -54,15 +54,14 @@ export function SettingsView() {
     refetch();
   };
 
-  const importRef = useRef<HTMLInputElement>(null);
-  const [importStatus, setImportStatus] = useState("");
-
   const exportData = useCallback(async () => {
     const data = {
       categories: await db.categories.toArray(),
       time_blocks: await db.time_blocks.toArray(),
       tasks: await db.tasks.toArray(),
       daily_notes: await db.daily_notes.toArray(),
+      note_sections: await db.note_sections.toArray(),
+      note_pages: await db.note_pages.toArray(),
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -72,40 +71,6 @@ export function SettingsView() {
     a.click();
     URL.revokeObjectURL(url);
   }, []);
-
-  const importData = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    try {
-      const text = await file.text();
-      const data = JSON.parse(text);
-
-      await db.transaction("rw", [db.categories, db.time_blocks, db.tasks, db.daily_notes], async () => {
-        if (data.categories?.length) {
-          await db.categories.clear();
-          await db.categories.bulkAdd(data.categories);
-        }
-        if (data.time_blocks?.length) {
-          await db.time_blocks.clear();
-          await db.time_blocks.bulkAdd(data.time_blocks);
-        }
-        if (data.tasks?.length) {
-          await db.tasks.clear();
-          await db.tasks.bulkAdd(data.tasks);
-        }
-        if (data.daily_notes?.length) {
-          await db.daily_notes.clear();
-          await db.daily_notes.bulkAdd(data.daily_notes);
-        }
-      });
-
-      setImportStatus(`Imported ${data.categories?.length || 0} categories, ${data.time_blocks?.length || 0} events, ${data.tasks?.length || 0} tasks, ${data.daily_notes?.length || 0} notes`);
-      refetch();
-    } catch {
-      setImportStatus("Failed to import — invalid file format.");
-    }
-    if (importRef.current) importRef.current.value = "";
-  }, [refetch]);
 
   if (loading) {
     return (
@@ -259,31 +224,18 @@ export function SettingsView() {
         <div className="px-5 py-4 border-b border-stone-200">
           <h3 className="text-sm font-semibold text-stone-800">Data</h3>
           <p className="text-xs text-stone-500 mt-0.5">
-            Export or import all your planner data as JSON
+            Export all your planner data as a JSON backup
           </p>
         </div>
-        <div className="px-5 py-4 flex items-center gap-3">
+        <div className="px-5 py-4">
           <Button variant="secondary" size="sm" onClick={exportData}>
             <Download size={14} />
             Export All Data
           </Button>
-          <Button variant="secondary" size="sm" onClick={() => importRef.current?.click()}>
-            <Upload size={14} />
-            Import Data
-          </Button>
-          <input
-            ref={importRef}
-            type="file"
-            accept=".json"
-            onChange={importData}
-            className="hidden"
-          />
+          <p className="text-xs text-stone-400 mt-2">
+            To restore, go to Import → Backup (.json)
+          </p>
         </div>
-        {importStatus && (
-          <div className="px-5 pb-4">
-            <p className="text-sm text-green-600">{importStatus}</p>
-          </div>
-        )}
       </div>
     </div>
   );

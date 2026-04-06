@@ -1,8 +1,8 @@
 "use client";
 
-import { CalendarDays, List, Sun, Cog, Upload } from "lucide-react";
+import { CalendarDays, List, Sun, StickyNote, CheckSquare, Cog, Upload } from "lucide-react";
 
-type View = "calendar" | "list" | "day" | "import" | "settings";
+type View = "calendar" | "list" | "day" | "notes" | "todos" | "import" | "settings";
 
 interface LeftNavProps {
   activeView: View;
@@ -13,6 +13,8 @@ const navItems: { icon: typeof CalendarDays; view: View; label: string }[] = [
   { icon: List, view: "list", label: "List" },
   { icon: Sun, view: "day", label: "Day" },
   { icon: CalendarDays, view: "calendar", label: "Week" },
+  { icon: StickyNote, view: "notes", label: "Notes" },
+  { icon: CheckSquare, view: "todos", label: "To-Do" },
 ];
 
 export function LeftNav({ activeView, onViewChange }: LeftNavProps) {

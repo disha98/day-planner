@@ -9,6 +9,7 @@ export interface TimeBlock {
   id: string;
   title: string;
   description: string | null;
+  meeting_url: string | null;
   date: string;
   start_hour: number;
   end_hour: number;
@@ -29,6 +30,23 @@ export interface Task {
   category_id: string | null;
   category_name: string | null;
   category_color: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NoteSection {
+  id: string;
+  name: string;
+  sort_order: number;
+  created_at: string;
+}
+
+export interface NotePage {
+  id: string;
+  section_id: string;
+  title: string;
+  content: string;
+  sort_order: number;
   created_at: string;
   updated_at: string;
 }

@@ -1,0 +1,215 @@
+{
+  "categories": [
+    {
+      "id": "cat-work-001",
+      "name": "Work",
+      "color": "#3b82f6",
+      "created_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "cat-personal-002",
+      "name": "Personal",
+      "color": "#10b981",
+      "created_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "cat-health-003",
+      "name": "Health",
+      "color": "#f59e0b",
+      "created_at": "2025-04-01T08:00:00.000Z"
+    }
+  ],
+  "time_blocks": [
+    {
+      "id": "tb-001",
+      "title": "Morning Focus Block",
+      "description": "Deep work — no meetings",
+      "meeting_url": null,
+      "date": "2025-04-07",
+      "start_hour": 9,
+      "end_hour": 11,
+      "category_id": "cat-work-001",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-002",
+      "title": "Sprint Planning",
+      "description": "Plan the next two-week sprint",
+      "meeting_url": "https://zoom.us/j/9876543210",
+      "date": "2025-04-07",
+      "start_hour": 11,
+      "end_hour": 12,
+      "category_id": "cat-work-001",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-003",
+      "title": "Gym",
+      "description": "Upper body day",
+      "meeting_url": null,
+      "date": "2025-04-07",
+      "start_hour": 17,
+      "end_hour": 18,
+      "category_id": "cat-health-003",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-004",
+      "title": "Design Review",
+      "description": "Review dashboard mockups with design team",
+      "meeting_url": "https://meet.google.com/xyz-abcd-efg",
+      "date": "2025-04-08",
+      "start_hour": 10,
+      "end_hour": 11,
+      "category_id": "cat-work-001",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-005",
+      "title": "Dentist Appointment",
+      "description": null,
+      "meeting_url": null,
+      "date": "2025-04-08",
+      "start_hour": 14,
+      "end_hour": 15,
+      "category_id": "cat-personal-002",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-006",
+      "title": "Code Review Session",
+      "description": "Review open PRs from the team",
+      "meeting_url": null,
+      "date": "2025-04-09",
+      "start_hour": 13,
+      "end_hour": 14,
+      "category_id": "cat-work-001",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "tb-007",
+      "title": "Yoga",
+      "description": "Vinyasa flow class",
+      "meeting_url": null,
+      "date": "2025-04-09",
+      "start_hour": 7,
+      "end_hour": 8,
+      "category_id": "cat-health-003",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-001",
+      "title": "Finish API endpoint for user profiles",
+      "completed": 0,
+      "priority": "high",
+      "date": "2025-04-07",
+      "sort_order": 0,
+      "category_id": "cat-work-001",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-002",
+      "title": "Write unit tests for auth module",
+      "completed": 0,
+      "priority": "medium",
+      "date": "2025-04-07",
+      "sort_order": 1,
+      "category_id": "cat-work-001",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-003",
+      "title": "Buy groceries",
+      "completed": 1,
+      "priority": "low",
+      "date": "2025-04-07",
+      "sort_order": 2,
+      "category_id": "cat-personal-002",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-004",
+      "title": "Update project README",
+      "completed": 0,
+      "priority": "low",
+      "date": "2025-04-08",
+      "sort_order": 0,
+      "category_id": "cat-work-001",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "task-005",
+      "title": "Schedule car service",
+      "completed": 0,
+      "priority": "medium",
+      "date": null,
+      "sort_order": 3,
+      "category_id": "cat-personal-002",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    }
+  ],
+  "daily_notes": [
+    {
+      "id": "note-001",
+      "date": "2025-04-07",
+      "content": "Productive morning — knocked out the focus block without interruptions. Sprint planning went smoothly, team aligned on priorities for the week.",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "note-002",
+      "date": "2025-04-08",
+      "content": "Design review surfaced a few UX issues with the sidebar navigation. Need to follow up with the design team tomorrow.",
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    }
+  ],
+  "note_sections": [
+    {
+      "id": "section-001",
+      "name": "Project Notes",
+      "sort_order": 0,
+      "created_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "section-002",
+      "name": "Meeting Notes",
+      "sort_order": 1,
+      "created_at": "2025-04-01T08:00:00.000Z"
+    }
+  ],
+  "note_pages": [
+    {
+      "id": "page-001",
+      "section_id": "section-001",
+      "title": "Dashboard Redesign",
+      "content": "## Goals\n- Simplify the main navigation\n- Add quick-action buttons to the header\n- Improve mobile responsiveness\n\n## Open Questions\n- Should we keep the sidebar on mobile?\n- What analytics do users actually check daily?",
+      "sort_order": 0,
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "page-002",
+      "section_id": "section-002",
+      "title": "Sprint Planning — Apr 7",
+      "content": "## Action Items\n- Finalize API schema for user profiles\n- Set up staging environment\n- Review and merge auth module PRs\n\n## Notes\nTeam agreed to reduce WIP limit to 3 items per person this sprint.",
+      "sort_order": 0,
+      "created_at": "2025-04-01T08:00:00.000Z",
+      "updated_at": "2025-04-01T08:00:00.000Z"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 "use client";
 
+import { Video } from "lucide-react";
+import { useDraggable } from "@dnd-kit/core";
 import { TimeBlock } from "@/types";
 
 interface TimeBlockCardProps {
@@ -24,19 +26,31 @@ export function TimeBlockCard({ block, onClick }: TimeBlockCardProps) {
 
   const categoryColor = block.category_color ?? "#a8a29e"; // stone-400 fallback
 
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: block.id,
+  });
+
+  const dragStyle = transform
+    ? { transform: `translate(${transform.x}px, ${transform.y}px)` }
+    : {};
+
   return (
     <button
+      ref={setNodeRef}
       type="button"
       onClick={(e) => {
         e.stopPropagation();
         onClick(block);
       }}
-      className="absolute left-8 right-1 rounded-md px-2 py-1 text-left cursor-pointer hover:shadow-md transition-shadow overflow-hidden z-10"
+      {...listeners}
+      {...attributes}
+      className={`absolute left-8 right-1 rounded-md px-2 py-1 text-left cursor-grab hover:shadow-md transition-shadow overflow-hidden z-10 ${isDragging ? "opacity-50 shadow-lg" : ""}`}
       style={{
         top: `${top}px`,
         height: `${height}px`,
         borderLeft: `3px solid ${categoryColor}`,
-        backgroundColor: `${categoryColor}1A`, // ~10% opacity hex
+        backgroundColor: `${categoryColor}1A`,
+        ...dragStyle,
       }}
     >
       <p
@@ -45,9 +59,35 @@ export function TimeBlockCard({ block, onClick }: TimeBlockCardProps) {
         {block.title}
       </p>
       {!isShort && (
-        <p className="text-[10px] text-stone-500 mt-0.5">
-          {formatHour(block.start_hour)} - {formatHour(block.end_hour)}
-        </p>
+        <>
+          <p className="text-[10px] text-stone-500 mt-0.5">
+            {formatHour(block.start_hour)} - {formatHour(block.end_hour)}
+          </p>
+          {block.meeting_url && (
+            <a
+              href={block.meeting_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1 mt-1 text-[11px] text-blue-600 hover:text-blue-800 font-medium px-1.5 py-0.5 rounded bg-blue-50 hover:bg-blue-100 transition-colors w-fit"
+            >
+              <Video size={11} />
+              Join
+            </a>
+          )}
+        </>
+      )}
+      {isShort && block.meeting_url && (
+        <a
+          href={block.meeting_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex items-center gap-0.5 text-[10px] text-blue-600 hover:text-blue-800 font-medium mt-0.5"
+        >
+          <Video size={10} />
+          Join
+        </a>
       )}
     </button>
   );
